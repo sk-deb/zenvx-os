@@ -1,0 +1,12 @@
+[package]
+name = "zenvx-compositor"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "zenvx-compositor"
+path = "src/bin/compositor.rs"
+
+[dependencies]
+zenvx-common = { path = "../common" }

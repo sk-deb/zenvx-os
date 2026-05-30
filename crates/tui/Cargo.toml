@@ -1,0 +1,16 @@
+[package]
+name = "zenvx-tui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "zenvx-tui"
+path = "src/bin/tui.rs"
+
+[dependencies]
+zenvx-common = { path = "../common" }
+zenvx-ai-core = { path = "../ai-core" }
+zenvx-launcher = { path = "../launcher" }
+ratatui = "0.29"
+crossterm = "0.28"

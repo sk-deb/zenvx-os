@@ -1,0 +1,12 @@
+[package]
+name = "zenvx-launcher"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "zenvx-launch"
+path = "src/bin/launch.rs"
+
+[dependencies]
+zenvx-common = { path = "../common" }

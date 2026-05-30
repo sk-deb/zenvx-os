@@ -1,0 +1,9 @@
+[package]
+name = "zenvx-agent"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zenvx-common = { path = "../common" }
+zenvx-launcher = { path = "../launcher" }

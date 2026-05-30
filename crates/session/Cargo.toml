@@ -1,0 +1,11 @@
+[package]
+name = "zenvx-session"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zenvx-common = { path = "../common" }
+zenvx-agent = { path = "../agent" }
+zenvx-compositor = { path = "../compositor" }
+zenvx-voice = { path = "../voice" }

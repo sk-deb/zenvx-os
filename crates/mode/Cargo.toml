@@ -1,0 +1,8 @@
+[package]
+name = "zenvx-mode"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+zenvx-common = { path = "../common" }

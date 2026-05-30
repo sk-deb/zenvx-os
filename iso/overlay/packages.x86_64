@@ -1,0 +1,9 @@
+# Extra packages baked into the ZenvX OS live image (appended to archiso releng).
+wine
+flatpak
+konsole
+mesa
+ollama
+pipewire
+pipewire-pulse
+noto-fonts

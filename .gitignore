@@ -1,0 +1,14 @@
+# Rust build output
+/target
+**/target
+
+# Kernel/boot harness artifacts
+*.o
+*.elf
+*.iso
+/isodir
+
+# ISO build artifacts
+/iso/build-profile
+/iso/iso-work
+/iso/iso-out

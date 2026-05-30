@@ -1,0 +1,14 @@
+[package]
+name = "zenvx-repl"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "zenvx-repl"
+path = "src/bin/repl.rs"
+
+[dependencies]
+zenvx-common = { path = "../common" }
+zenvx-ai-core = { path = "../ai-core" }
+zenvx-agent = { path = "../agent" }

@@ -1,0 +1,6 @@
+#!/bin/sh
+# ZenvX session entrypoint (runs on first console login of the live image).
+echo "Starting ZenvX session..."
+zenvx            # first-boot provider setup (OpenRouter key, or local fallback)
+echo "ZenvX session ready"
+exec zenvx-tui   # the full-screen ZenvX interface (chat + launcher + status)
