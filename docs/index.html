@@ -35,7 +35,7 @@ a:hover { text-decoration: underline; }
 <span class="badge">31 tests passing</span>
 <span class="badge">Arch-based</span>
 <span class="badge">Rust</span>
-<span class="badge">Boots in QEMU ✓</span>
+<span class="badge">Sway desktop ✓</span>
 </div>
 
 <h2>Quick Start</h2>
@@ -76,8 +76,10 @@ sync</code></pre>
 <li>Enter the boot menu (F12 / F2 / Esc / Del)</li>
 <li>Select the USB — it boots a single entry: <strong>ZenvX OS P1</strong></li>
 <li>Shows <strong>"Welcome to ZenvX OS P1"</strong>, then asks for your <strong>OpenRouter API key</strong> (or leave blank for local Ollama)</li>
-<li>Launches the <strong>ZenvX TUI</strong> — full-screen chat + app launcher + status bar</li>
+<li>Launches the <strong>Sway graphical desktop</strong> (Hyprland-style tiling Wayland) with a ZenvX-branded bar and the agent TUI in a terminal</li>
 </ol>
+
+<p><strong>Desktop keys:</strong> <code>Super+Enter</code> terminal · <code>Super+D</code> app launcher · <code>Super+Q</code> close · <code>Super+Shift+E</code> exit. Uses software rendering (<code>WLR_RENDERER=pixman</code>) so it runs without a dedicated GPU.</p>
 
 <h2>Architecture</h2>
 <table>

@@ -106,7 +106,22 @@ lsblk -o NAME,SIZE,LABEL /dev/sdX
 4. ZenvX auto-starts:
    - Shows **"Welcome to ZenvX OS P1"**
    - First boot: asks for your **OpenRouter API key** (or leave blank to switch to local Ollama)
-   - Then launches the **ZenvX TUI** — full-screen chat + app launcher + status bar
+   - Launches the **Sway graphical desktop** (Hyprland-style tiling Wayland) with a ZenvX-branded
+     bar and the agent **TUI** running in a terminal
+
+### Desktop keybindings
+
+| Key | Action |
+|-----|--------|
+| `Super+Enter` | open a terminal |
+| `Super+D` | app launcher (wofi) |
+| `Super+Q` | close window |
+| `Super+1/2/3` | switch workspace |
+| `Super+Shift+E` | exit the desktop |
+
+> The desktop uses software rendering (`WLR_RENDERER=pixman`) so it runs without a dedicated GPU.
+> Hyprland is not used because it hard-requires GPU OpenGL acceleration; Sway gives the same
+> tiling-Wayland experience and works on low-end/GPU-less hardware.
 
 ### First boot options
 
