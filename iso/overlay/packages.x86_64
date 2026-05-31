@@ -1,9 +1,21 @@
-# Extra packages baked into the ZenvX OS live image (appended to archiso releng).
+# Extra packages baked into the ZenvX OS P1 live image (appended to archiso releng).
+
+# Graphical session (Hyprland-style tiling Wayland, software-render capable)
+sway
+swaybg
+swayidle
+foot
+wofi
+xorg-xwayland
+
+# App compatibility + media
 wine
 flatpak
-konsole
 mesa
 ollama
 pipewire
 pipewire-pulse
+
+# Fonts
+ttf-dejavu
 noto-fonts
