@@ -8,12 +8,14 @@ use zenvx_common::{NAME, VERSION};
 /// Small default that fits the low-RAM target machine.
 const DEFAULT_LOCAL_MODEL: &str = "llama3.2:1b";
 
-fn prompt(msg: &str) -> String {
+fn prompt(msg: &str) -> Option<String> {
     print!("{msg}");
     io::stdout().flush().ok();
     let mut s = String::new();
-    io::stdin().lock().read_line(&mut s).ok();
-    s.trim().to_string()
+    match io::stdin().lock().read_line(&mut s) {
+        Ok(0) | Err(_) => None, // EOF or error — caller should stop, not loop
+        Ok(_) => Some(s.trim().to_string()),
+    }
 }
 
 /// First installed Ollama model, if any (`ollama list`, skip header, take col 0).
@@ -30,33 +32,42 @@ fn detect_ollama_model() -> Option<String> {
         .map(str::to_string)
 }
 
-/// Interactive first-boot flow. Loops until a provider is chosen.
+/// Interactive first-boot flow. Loops until a provider is chosen (or stdin ends).
 fn first_boot_setup() -> Config {
     println!("Welcome to {NAME} — first-boot setup.\n");
     loop {
-        let key = prompt("Enter your OpenRouter API key (leave blank to skip): ");
-        if !key.is_empty() {
-            println!("OpenRouter set as the default provider.");
-            return Config {
-                provider: Provider::OpenRouter,
-                model: Some("openrouter/auto".into()),
-                openrouter_key: Some(key),
-            };
+        match prompt("Enter your OpenRouter API key (leave blank to skip): ") {
+            None => break, // stdin closed — stop instead of spinning
+            Some(key) if !key.is_empty() => {
+                println!("OpenRouter set as the default provider.");
+                return Config {
+                    provider: Provider::OpenRouter,
+                    model: Some("openrouter/auto".into()),
+                    openrouter_key: Some(key),
+                };
+            }
+            Some(_) => {}
         }
 
-        let ans = prompt("No key given. Switch to a local Ollama model instead? [y/N]: ")
-            .to_lowercase();
-        if ans == "y" || ans == "yes" {
-            let model = detect_ollama_model().unwrap_or_else(|| {
-                println!("No local model installed; defaulting to '{DEFAULT_LOCAL_MODEL}' (run: ollama pull {DEFAULT_LOCAL_MODEL}).");
-                DEFAULT_LOCAL_MODEL.into()
-            });
-            println!("Using local Ollama model: {model}");
-            return Config { provider: Provider::Ollama, model: Some(model), openrouter_key: None };
+        match prompt("No key given. Switch to a local Ollama model instead? [y/N]: ")
+            .map(|s| s.to_lowercase())
+        {
+            None => break,
+            Some(ans) if ans == "y" || ans == "yes" => {
+                let model = detect_ollama_model().unwrap_or_else(|| {
+                    println!("No local model installed; defaulting to '{DEFAULT_LOCAL_MODEL}' (run: ollama pull {DEFAULT_LOCAL_MODEL}).");
+                    DEFAULT_LOCAL_MODEL.into()
+                });
+                println!("Using local Ollama model: {model}");
+                return Config { provider: Provider::Ollama, model: Some(model), openrouter_key: None };
+            }
+            _ => {}
         }
 
         println!("Okay — let's try the API key again.\n");
     }
+    // stdin ended without a choice: default to OpenRouter (no key); UI prompts later.
+    Config { provider: Provider::OpenRouter, model: Some("openrouter/auto".into()), openrouter_key: None }
 }
 
 fn main() {

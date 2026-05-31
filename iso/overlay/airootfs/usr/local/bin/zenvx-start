@@ -1,6 +1,8 @@
 #!/bin/sh
-# ZenvX session entrypoint (runs on first console login of the live image).
-echo "Starting ZenvX session..."
-zenvx            # first-boot provider setup (OpenRouter key, or local fallback)
-echo "ZenvX session ready"
-exec zenvx-tui   # the full-screen ZenvX interface (chat + launcher + status)
+# ZenvX OS P1 session entrypoint (runs on the live console).
+clear
+# Stop the Linux console from blanking to black while idle.
+setterm --blank 0 --powerdown 0 2>/dev/null || true
+printf '\n  Welcome to ZenvX OS P1\n\n'
+zenvx || true        # first-boot provider setup (OpenRouter key, or local fallback)
+exec zenvx-tui       # full-screen interface (chat + launcher + status)
