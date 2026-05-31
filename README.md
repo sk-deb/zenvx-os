@@ -32,8 +32,8 @@ sudo pacman -S --needed base-devel rust qemu-system-x86 qemu-ui-gtk grub xorriso
 ## Build & Run (development)
 
 ```sh
-git clone https://github.com/sk-deb/zenvx-os.git
-cd zenvx-os
+git clone https://github.com/sk-deb/ZenvX-OS-prototype01.git
+cd ZenvX-OS-prototype01
 
 # Build the Rust workspace
 cargo build --release
