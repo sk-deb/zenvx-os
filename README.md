@@ -1,4 +1,4 @@
-# ZenvX OS
+# ZenvX OS P1
 
 A voice-driven, Arch-based Linux session: an ~80% GUI zone that composites any
 app (Windows `.exe` via Wine, Linux via Flatpak/AppImage/pacman) and a ~20%
@@ -102,10 +102,11 @@ lsblk -o NAME,SIZE,LABEL /dev/sdX
 
 1. Plug the USB into the target machine
 2. Enter the boot menu (F12 / F2 / Esc / Del at power-on)
-3. Select the USB device
+3. Select the USB device — it boots a single entry: **ZenvX OS P1**
 4. ZenvX auto-starts:
-   - First boot: asks for your **OpenRouter API key** (or switch to local Ollama)
-   - Then drops into the **ZenvX TUI** — full-screen chat + app launcher
+   - Shows **"Welcome to ZenvX OS P1"**
+   - First boot: asks for your **OpenRouter API key** (or leave blank to switch to local Ollama)
+   - Then launches the **ZenvX TUI** — full-screen chat + app launcher + status bar
 
 ### First boot options
 
