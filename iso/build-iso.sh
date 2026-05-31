@@ -21,11 +21,31 @@ rm -f build-profile/airootfs/root/.bash_profile   # zsh ignores it; avoid confus
 {
   echo ''
   echo 'file_permissions+=('
-  for b in zenvx zenvx-tui zenvx-repl ai-core zenvx-launch zenvx-voice zenvx-settings zenvx-compositor zenvx-start; do
+  for b in zenvx zenvx-tui zenvx-repl ai-core zenvx-launch zenvx-voice zenvx-settings zenvx-compositor zenvx-start zenvx-say zenvx-listen whisper-cli; do
     echo "  [\"/usr/local/bin/$b\"]=\"0:0:755\""
   done
   echo ')'
 } >> build-profile/profiledef.sh
+
+# --- bundle local speech-to-text: build whisper.cpp + fetch the tiny English model ---
+# (non-fatal: if it fails, voice output still works and push-to-talk degrades gracefully)
+if command -v cmake >/dev/null && command -v git >/dev/null; then
+  (
+    set -e
+    WD=$(mktemp -d)
+    git clone --depth=1 https://github.com/ggml-org/whisper.cpp "$WD/wc"
+    cmake -S "$WD/wc" -B "$WD/wc/build" -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=ON
+    cmake --build "$WD/wc/build" --target whisper-cli -j"$(nproc)"
+    install -Dm755 "$WD/wc/build/bin/whisper-cli" build-profile/airootfs/usr/local/bin/whisper-cli
+    mkdir -p build-profile/airootfs/usr/share/zenvx/whisper
+    curl -L -o build-profile/airootfs/usr/share/zenvx/whisper/ggml-tiny.en.bin \
+      https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.en.bin
+    rm -rf "$WD"
+    echo "whisper.cpp STT bundled."
+  ) || echo "WARN: whisper.cpp build/download failed — push-to-talk will be disabled in this image."
+else
+  echo "WARN: cmake/git missing — skipping local STT (install: pacman -S cmake git)."
+fi
 
 # --- single boot entry: "ZenvX OS P1" ---
 # BIOS (syslinux)

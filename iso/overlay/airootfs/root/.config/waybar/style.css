@@ -1,0 +1,35 @@
+* {
+    font-family: "DejaVu Sans Mono";
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+window#waybar {
+    background: rgba(26, 27, 38, 0.92);
+    color: #c0caf5;
+}
+#custom-brand {
+    color: #1a1b26;
+    background: #7aa2f7;
+    padding: 0 12px;
+    margin: 4px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+#workspaces button {
+    color: #a9b1d6;
+    padding: 0 8px;
+}
+#workspaces button.active {
+    color: #1a1b26;
+    background: #bb9af7;
+    border-radius: 8px;
+}
+#clock, #pulseaudio, #custom-firefox, #custom-voice, #tray {
+    padding: 0 10px;
+    margin: 4px 2px;
+    background: rgba(65, 72, 104, 0.4);
+    border-radius: 8px;
+}
+#clock { color: #7dcfff; font-weight: bold; }

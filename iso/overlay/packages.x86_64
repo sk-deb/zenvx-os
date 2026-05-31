@@ -1,20 +1,32 @@
 # Extra packages baked into the ZenvX OS P1 live image (appended to archiso releng).
 
-# Graphical session (Hyprland-style tiling Wayland, software-render capable)
-sway
-swaybg
-swayidle
+# Graphical desktop — Hyprland (animated tiling Wayland), with Sway as fallback
+hyprland
+waybar
+fuzzel
 foot
-wofi
+swaybg
+mako
+hyprpaper
+libnotify
 xorg-xwayland
+sway
+
+# System apps
+firefox
+
+# Voice: espeak-ng (TTS) + PipeWire capture/playback (STT via bundled whisper.cpp)
+espeak-ng
+pipewire
+pipewire-pulse
+wireplumber
+sox
 
 # App compatibility + media
 wine
 flatpak
 mesa
 ollama
-pipewire
-pipewire-pulse
 
 # Fonts
 ttf-dejavu

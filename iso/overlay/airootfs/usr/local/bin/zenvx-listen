@@ -1,0 +1,25 @@
+#!/bin/sh
+# zenvx-listen — push-to-talk: record, transcribe (whisper.cpp), ask the agent, speak the reply.
+WH=/usr/local/bin/whisper-cli
+MODEL=/usr/share/zenvx/whisper/ggml-tiny.en.bin
+REC=/tmp/zenvx-rec.wav
+
+notify-send "ZenvX" "Listening… (speak now, 5s)" 2>/dev/null
+# whisper wants 16kHz mono
+pw-record --rate 16000 --channels 1 "$REC" & RPID=$!
+sleep 5
+kill "$RPID" 2>/dev/null
+
+if [ ! -x "$WH" ] || [ ! -f "$MODEL" ]; then
+    notify-send "ZenvX" "Speech-to-text not installed" 2>/dev/null
+    exit 0
+fi
+
+TEXT=$("$WH" -m "$MODEL" -f "$REC" -nt 2>/dev/null | tr '\n' ' ' | sed 's/^ *//; s/ *$//')
+[ -z "$TEXT" ] && { notify-send "ZenvX" "Didn't catch that" 2>/dev/null; exit 0; }
+notify-send "ZenvX heard:" "$TEXT" 2>/dev/null
+
+REPLY=$(ai-core ask "$TEXT" 2>/dev/null)
+[ -z "$REPLY" ] && REPLY="I couldn't reach the AI provider. Check your key with the zenvx command."
+notify-send "ZenvX:" "$REPLY" 2>/dev/null
+printf '%s' "$REPLY" | zenvx-say

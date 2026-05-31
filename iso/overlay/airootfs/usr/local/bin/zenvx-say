@@ -1,0 +1,5 @@
+#!/bin/sh
+# zenvx-say — speak text (args or stdin) aloud via espeak-ng.
+TEXT="$*"; [ -z "$TEXT" ] && TEXT="$(cat)"
+[ -z "$TEXT" ] && exit 0
+printf '%s' "$TEXT" | espeak-ng -s 160 -p 40 2>/dev/null

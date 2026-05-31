@@ -1,9 +1,18 @@
 #!/bin/sh
-# ZenvX OS P1 session entrypoint — launches the Sway graphical desktop.
+# ZenvX OS P1 session entrypoint — launches the Hyprland animated desktop.
 clear
-printf '\n  Welcome to ZenvX OS P1 — starting the graphical desktop...\n\n'
-# Software rendering so it works without a dedicated GPU (and inside QEMU).
-export WLR_RENDERER=pixman
-export WLR_NO_HARDWARE_CURSORS=1
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-exec sway
+printf '\n  Welcome to ZenvX OS P1 — starting the desktop...\n\n'
+
+# Primary: Hyprland (hardware-accelerated, animated)
+if command -v Hyprland >/dev/null 2>&1; then
+    Hyprland && exit 0
+fi
+# Fallback: Sway with software rendering (GPU-less machines)
+export WLR_RENDERER=pixman WLR_NO_HARDWARE_CURSORS=1
+if command -v sway >/dev/null 2>&1; then
+    sway && exit 0
+fi
+# Last resort: the agent in the bare console
+zenvx
+exec zenvx-tui

@@ -1,0 +1,16 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "spacing": 6,
+    "modules-left": ["custom/brand", "hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["custom/firefox", "custom/voice", "pulseaudio", "tray"],
+    "custom/brand": { "format": "  ZenvX OS P1", "tooltip": false },
+    "hyprland/workspaces": { "format": "{id}", "on-click": "activate" },
+    "clock": { "format": "{:%a %d %b   %H:%M}" },
+    "custom/firefox": { "format": "🦊", "on-click": "firefox", "tooltip-format": "Firefox" },
+    "custom/voice": { "format": "🎤", "on-click": "zenvx-listen", "tooltip-format": "Push to talk (Super+Space)" },
+    "pulseaudio": { "format": "{icon} {volume}%", "format-muted": "🔇", "format-icons": { "default": ["🔈", "🔊"] } },
+    "tray": { "spacing": 8 }
+}
